@@ -12,3 +12,10 @@ export const getUsers = async () => {
   const result = await pool.query("SELECT * FROM users");
   return result.rows;
 };
+
+export const getProducts = async () => {
+  const result = await pool.query("SELECT * FROM products");
+  return result.rows;
+};
+
+

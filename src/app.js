@@ -1,7 +1,6 @@
 import express from "express";
-import userRoutes from "./routes/userRoutes.js";
-import productRoutes from "./routes/productRoutes.js";
-import orderRoutes from "./routes/orderRoutes.js";
+import userRoutes from "./routes/userRoute.js";  // import default export
+import productRoute from "./routes/productRoute.js";
 
 const app = express();
 
@@ -9,11 +8,10 @@ app.use(express.json());
 
 // Routes
 app.use("/api/users", userRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/orders", orderRoutes);
+app.use("/api/products", productRoute);
+// app.use("/api/orders", orderRoutes);
 
-app.get("/", (req, res) => {
-  res.send("Monolithic App is running 🚀");
-});
+// app.get("/getUsers", listUsers )
+// app.get("/getProduct", listProduct)
 
 export default app;

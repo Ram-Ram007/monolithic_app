@@ -18,4 +18,13 @@ export const getProducts = async () => {
   return result.rows;
 };
 
+// export const deleteUserbyId = async()=>{
+//   const result = await pool.query("SELECT * FROM users");
+//   return result.rows;
+// }
+export const deleteUserById = async(id)=>{
+  const result = await pool.query("DELETE FROM users WHERE id = $1 RETURNING *", [id]);
+  return result.rows[0];
+}
+
 

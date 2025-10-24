@@ -1,4 +1,4 @@
-import { createUser, deleteUserById, getUsers } from "../model/userModel.js";
+import { createUser, deleteUserbyId, deleteUserById, getUsers } from "../model/userModel.js";
 
 export const addUser = async (req, res) => {
   try {
@@ -26,7 +26,7 @@ export const listUsers = async (req, res) => {
 
 export const deleteUser = async(req,res) =>{
   try{
-    const deleteUser = await deleteUserById();
+    const deleteUser = await deleteUserbyId();
     res.json(deleteUser);
     const { userId } = req.params;
     const deletedUser = await deleteUserById(userId);
@@ -38,7 +38,7 @@ export const deleteUser = async(req,res) =>{
     res.status(200).json({ msg: 'User deleted successfully', user: deletedUser });
   }
   catch(err){
-    res.status(500).json({error:err.message})
+    res.status(500)
   }
 
 }

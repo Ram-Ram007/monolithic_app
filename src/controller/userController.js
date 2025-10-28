@@ -1,4 +1,4 @@
-import { createUser, deleteUserbyId, deleteUserById, getUsers } from "../model/userModel.js";
+import { createUser, deleteUserById, getUsers } from "../model/userModel.js";
 
 export const addUser = async (req, res) => {
   try {
@@ -24,21 +24,20 @@ export const listUsers = async (req, res) => {
   }
 };
 
-export const deleteUser = async(req,res) =>{
-  try{
-    const deleteUser = await deleteUserbyId();
-    res.json(deleteUser);
+export const deleteUser = async (req, res) => {
+  try {
     const { userId } = req.params;
-    const deletedUser = await deleteUserById(userId);
-    
-    if (!deletedUser) {
-      return res.status(404).json({ error: 'User not found' });
+    if (!userId) {
+      return res.status(400).json({ error: "Missing userId parameter" });
     }
 
-    res.status(200).json({ msg: 'User deleted successfully', user: deletedUser });
-  }
-  catch(err){
-    res.status(500)
-  }
+    const deletedUser = await deleteUserById(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
-}
+    return res.status(200).json({ msg: "User deleted successfully", user: deletedUser });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};

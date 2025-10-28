@@ -13,15 +13,7 @@ export const getUsers = async () => {
   return result.rows;
 };
 
-export const getProducts = async () => {
-  const result = await pool.query("SELECT * FROM products");
-  return result.rows;
-};
-
-export const deleteUserbyId = async()=>{
-  const result = await pool.query("SELECT * FROM users");
-  return result.rows;
-}
+// Removed unused getProducts and deleteUserbyId helpers
 export const deleteUserById = async(id)=>{
   const result = await pool.query("DELETE FROM users WHERE id = $1 RETURNING *", [id]);
   return result.rows[0];

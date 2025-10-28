@@ -10,7 +10,6 @@ router.get("/getUsers", listUsers);
 
 // Example add user route (replace with your real logic)
 router.post("/addUsers", addUser);
-router.delete('/deleteUser', deleteUser);
 router.delete('/:userId', deleteUser);
 
 export default router;

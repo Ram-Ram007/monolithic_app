@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
+import './App.css'
 
 type User = {
   id: number
@@ -98,16 +99,14 @@ export default function App() {
   }
 
   return (
-    <div style={{ maxWidth: 900, margin: '40px auto', fontFamily: 'system-ui, Arial' }}>
-      <h1>Users</h1>
+    <div className="container">
+      <h1 className="title">Users</h1>
 
       {error && (
-        <div style={{ background: '#fee', color: '#900', padding: 12, marginBottom: 16 }}>
-          {error}
-        </div>
+        <div className="alert">{error}</div>
       )}
 
-      <div style={{ display: 'grid', gap: 8, gridTemplateColumns: '1fr 1fr auto' }}>
+      <form className="formGrid" onSubmit={(e) => e.preventDefault()}>
         <input
           placeholder="Name"
           value={form.name}
@@ -119,37 +118,37 @@ export default function App() {
           onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
         />
         {editingId == null ? (
-          <button onClick={createUser}>Add</button>
+          <button type="button" className="btn btnPrimary" onClick={createUser}>Add</button>
         ) : (
-          <div style={{ display: 'flex', gap: 8 }}>
-            <button onClick={updateUser}>Save</button>
-            <button onClick={cancelEdit}>Cancel</button>
+          <div className="actions">
+            <button type="button" className="btn" onClick={updateUser}>Save</button>
+            <button type="button" className="btn btnWarn" onClick={cancelEdit}>Cancel</button>
           </div>
         )}
-      </div>
+      </form>
 
-      <div style={{ marginTop: 24 }}>
+      <div className="tableWrap">
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <table className="table">
             <thead>
               <tr>
-                <th style={{ textAlign: 'left', borderBottom: '1px solid #ddd', padding: 8 }}>ID</th>
-                <th style={{ textAlign: 'left', borderBottom: '1px solid #ddd', padding: 8 }}>Name</th>
-                <th style={{ textAlign: 'left', borderBottom: '1px solid #ddd', padding: 8 }}>Email</th>
-                <th style={{ textAlign: 'left', borderBottom: '1px solid #ddd', padding: 8 }}>Actions</th>
+                <th className="th">ID</th>
+                <th className="th">Name</th>
+                <th className="th">Email</th>
+                <th className="th">Actions</th>
               </tr>
             </thead>
             <tbody>
               {users.map((u) => (
                 <tr key={u.id}>
-                  <td style={{ borderBottom: '1px solid #eee', padding: 8 }}>{u.id}</td>
-                  <td style={{ borderBottom: '1px solid #eee', padding: 8 }}>{u.name}</td>
-                  <td style={{ borderBottom: '1px solid #eee', padding: 8 }}>{u.email}</td>
-                  <td style={{ borderBottom: '1px solid #eee', padding: 8 }}>
-                    <button onClick={() => startEdit(u)} style={{ marginRight: 8 }}>Edit</button>
-                    <button onClick={() => deleteUser(u.id)}>Delete</button>
+                  <td className="rowCell">{u.id}</td>
+                  <td className="rowCell">{u.name}</td>
+                  <td className="rowCell">{u.email}</td>
+                  <td className="rowCell">
+                    <button type="button" className="btn" onClick={() => startEdit(u)}>Edit</button>
+                    <button type="button" className="btn btnDanger" onClick={() => deleteUser(u.id)}>Delete</button>
                   </td>
                 </tr>
               ))}

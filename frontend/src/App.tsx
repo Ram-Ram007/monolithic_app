@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import  { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
 type User = {
@@ -22,7 +22,9 @@ export default function App() {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch(`${apiBase}/getUsers`)
+      const res = await fetch(`${apiBase}/getUsers`, {
+        headers: authHeader()
+      })
       if (!res.ok) throw new Error('Failed to fetch users')
       const data: User[] = await res.json()
       setUsers(data)
@@ -37,6 +39,11 @@ export default function App() {
     fetchUsers()
   }, [])
 
+  function authHeader() {
+    const t = localStorage.getItem('token')
+    return t ? { Authorization: `Bearer ${t}` } : {}
+  }
+
   async function createUser() {
     if (!form.name || !form.email) {
       setError('Name and email are required')
@@ -45,7 +52,7 @@ export default function App() {
     setError(null)
     const res = await fetch(`${apiBase}/addUsers`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...authHeader() },
       body: JSON.stringify(form)
     })
     if (!res.ok) {
@@ -75,7 +82,7 @@ export default function App() {
     if (form.email) payload.email = form.email
     const res = await fetch(`${apiBase}/${editingId}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...authHeader() },
       body: JSON.stringify(payload)
     })
     if (!res.ok) {
@@ -89,7 +96,7 @@ export default function App() {
 
   async function deleteUser(id: number) {
     setError(null)
-    const res = await fetch(`${apiBase}/${id}`, { method: 'DELETE' })
+    const res = await fetch(`${apiBase}/${id}`, { method: 'DELETE', headers: authHeader() })
     if (!res.ok) {
       const err = await res.json().catch(() => ({}))
       setError(err.error || 'Failed to delete user')

@@ -34,6 +34,9 @@ DB_HOST=localhost
 DB_NAME=your_db
 DB_PASS=your_db_pass
 DB_PORT=5432
+JWT_SECRET=change_me
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASS=admin123
 ```
 
 - API runs on http://localhost:7001
@@ -51,6 +54,7 @@ CREATE TABLE users (
 - `POST /api/users/addUsers` – create user (json: { name, email })
 - `PUT /api/users/:userId` – update user (json: { name?, email? })
 - `DELETE /api/users/:userId` – delete user
+- `POST /api/auth/login` – admin login (json: { email, password }) → { token }
 
 ---
 
@@ -74,6 +78,7 @@ npm run dev
 ```
 - Open http://localhost:5173
 - The UI proxies API calls to `localhost:7001` automatically
+  - Login first with the credentials in your backend `.env`
 
 ### Development Notes
 - UI and API are independent; run both in parallel
